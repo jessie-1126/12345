@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Window</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='chat_windows.css') }}">
+</head>
+<body>
+    <div class="chat-container">
+        <div class="header">
+            <button class="back-btn">返回</button>
+            <span class="title">自酌一杯酒</span>
+            <button class="options-btn">關閉</button>
+        </div>
+        <div class="chat-content" id="chat-content">
+            <!-- 這裡會動態新增訊息 -->
+        </div>
+        <div class="input-bar">
+            <input type="text" id="message-input" placeholder="Type a message...">
+            <button class="send-btn" onclick="sendMessage()">發送</button>
+        </div>
+    </div>
+
+
+    <script>
+        // 發送訊息到伺服器並顯示回應
+        function sendMessage() {
+            const input = document.getElementById('message-input');
+            const message = input.value.trim();
+            if (message === '') return;
+
+
+            // 顯示使用者訊息
+            addMessageToChat('sent', message);
+            input.value = '';
+
+
+            // 使用 fetch 發送訊息到伺服器
+            fetch('/send_message', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ message: message })
+            })
+            .then(response => response.json())
+            .then(data => {
+                // 顯示伺服器回應
+                const botMessage = data.response;
+                addMessageToChat('received', botMessage);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+
+        // 在聊天內容中新增訊息
+        function addMessageToChat(type, text) {
+            const chatContent = document.getElementById('chat-content');
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message', type);
+
+
+            const messageContent = document.createElement('div');
+            messageContent.classList.add('message-content');
+            messageContent.innerText = text;
+
+
+            messageDiv.appendChild(messageContent);
+            chatContent.appendChild(messageDiv);
+
+
+            // 讓聊天視窗自動滾動到最新訊息
+            chatContent.scrollTop = chatContent.scrollHeight;
+        }
+    </script>
+</body>
+</html>

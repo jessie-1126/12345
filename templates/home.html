@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Welcome to the Home Page</h1>
+    <p>This is a simple Flask application with a rolling ball animation.</p>
+    <a href="/about">About</a>
+    <a href="/chat_window">chat_window</a>
+
+    <!-- 滾動的球 -->
+    <div class="ball"></div>
+
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
