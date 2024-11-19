@@ -10,7 +10,7 @@
     <div class="chat-container">
         <div class="header">
             <button class="back-btn">返回</button>
-            <span class="title">自酌一杯酒</span>
+            <span class="title">聊天室</span>
             <button class="options-btn">關閉</button>
         </div>
         <div class="chat-content" id="chat-content">
@@ -24,6 +24,14 @@
 
 
     <script>
+        // 監聽輸入框的 keydown 事件
+        document.getElementById('message-input').addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+
         // 發送訊息到伺服器並顯示回應
         function sendMessage() {
             const input = document.getElementById('message-input');

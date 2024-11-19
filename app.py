@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 
 ## 在此處替換為你的 OpenAI API Key
-client = OpenAI(api_key = config['openai'])
+client = OpenAI(api_key=config['openai'])
 
 
 
@@ -69,3 +69,4 @@ def send_message():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0',debug=True)
+
